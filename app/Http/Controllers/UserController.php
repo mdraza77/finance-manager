@@ -23,11 +23,11 @@ class UserController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware(PermissionMiddleware::class . ':user-index', only: ['index']),
-            new Middleware(PermissionMiddleware::class . ':user-create', only: ['create', 'store']),
-            new Middleware(PermissionMiddleware::class . ':user-edit', only: ['edit', 'update']),
-            new Middleware(PermissionMiddleware::class . ':user-delete', only: ['destroy']), // Or UserManagement-InActive
-            new Middleware(PermissionMiddleware::class . ':user-index', only: ['show']), // Usually 'view' uses the index permission
+            new Middleware(PermissionMiddleware::class . ':UserManagement-Index', only: ['index']),
+            new Middleware(PermissionMiddleware::class . ':UserManagement-Create', only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::class . ':UserManagement-Edit', only: ['edit', 'update']),
+            new Middleware(PermissionMiddleware::class . ':UserManagement-Delete', only: ['destroy']),
+            new Middleware(PermissionMiddleware::class . ':UserManagement-View', only: ['show']), // Usually 'view' uses the index permission
         ];
     }
     /**

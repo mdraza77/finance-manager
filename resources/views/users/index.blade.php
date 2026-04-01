@@ -64,14 +64,14 @@
                     </nav>
                 </div>
 
-                {{-- @can('UserManagement-Create') --}}
+                @can('UserManagement-Create')
                     <div class="mt-4 md:mt-0">
                         <a href="{{ route('users.create') }}"
                             class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-sm transition">
                             <i class="bi bi-person-plus-fill mr-2"></i> Add New User
                         </a>
                     </div>
-                {{-- @endcan --}}
+                @endcan
             </div>
         </div>
 
@@ -158,16 +158,16 @@
                                         <td class="px-4 py-4 text-center">
                                             <div class="flex items-center justify-center space-x-2">
 
-                                                {{-- @can('UserManagement-View') --}}
+                                                @can('UserManagement-View')
                                                     <a href="{{ route('users.show', $user->id) }}"
                                                         class="inline-flex items-center px-2.5 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-xs font-medium title="View">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
-                                                {{-- @endcan --}}
+                                                @endcan
 
                                                 @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
                                                     {{-- Edit Button (Only if Active) --}}
-                                                    {{-- @can('UserManagement-Edit') --}}
+                                                    @can('UserManagement-Edit')
                                                         @if ($user->deleted_at == null)
                                                             <a href="{{ route('users.edit', $user->id) }}"
                                                                 class="inline-flex items-center px-2.5 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-xs font-medium"
@@ -175,10 +175,10 @@
                                                                 <i class="fa-solid fa-pencil"></i>
                                                             </a>
                                                         @endif
-                                                    {{-- @endcan --}}
+                                                    @endcan
 
                                                     {{-- Activate/Deactivate Logic --}}
-                                                    {{-- @can('UserManagement-Delete') --}}
+                                                    @can('UserManagement-Delete')
                                                         @if ($user->deleted_at != null)
                                                             {{-- Activate Button --}}
                                                             <form method="POST"
@@ -208,7 +208,7 @@
                                                                 </button>
                                                             </form>
                                                         @endif
-                                                    {{-- @endcan --}}
+                                                    @endcan
                                                 @endif
                                             </div>
                                         </td>

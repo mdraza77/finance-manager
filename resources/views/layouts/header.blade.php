@@ -112,12 +112,21 @@
                             <span>Financial Records</span>
                         </a>
                     </li>
-                    @can('user-index')
+                    @can('UserManagement-Index')
                         <li>
-                            <a href="#"
+                            <a href="{{ route('users.index') }}"
                                 class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group">
                                 <i class="bi bi-people-fill mr-3"></i>
                                 <span>User Management</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('AccessManagement-Index')
+                        <li>
+                            <a href="{{ route('roles.index') }}"
+                                class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group">
+                                <i class="bi bi-lock-fill mr-3"></i>
+                                <span>Roles & Permissions</span>
                             </a>
                         </li>
                     @endcan

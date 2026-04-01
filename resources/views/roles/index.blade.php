@@ -63,14 +63,14 @@
                     </nav>
                 </div>
 
-                {{-- @can('access-control-manage') --}}
-                <div class="mt-4 md:mt-0">
-                    <a href="{{ route('roles.create') }}"
-                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-sm transition">
-                        <i class="bi bi-plus-lg mr-2"></i> Add New Role
-                    </a>
-                </div>
-                {{-- @endcan --}}
+                @can('AccessManagement-Create')
+                    <div class="mt-4 md:mt-0">
+                        <a href="{{ route('roles.create') }}"
+                            class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-sm transition">
+                            <i class="bi bi-plus-lg mr-2"></i> Add New Role
+                        </a>
+                    </div>
+                @endcan
             </div>
         </div>
 
@@ -100,39 +100,39 @@
                                             <div class="flex items-center justify-center space-x-2">
 
                                                 {{-- View Button --}}
-                                                {{-- @can('access-control-view') --}}
-                                                <a href="{{ route('roles.show', $role->id) }}"
-                                                    class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-sm font-medium">
-                                                    <i class="fa-regular fa-eye mr-1.5"></i> View
-                                                </a>
-                                                {{-- @endcan --}}
+                                                @can('AccessManagement-View')
+                                                    <a href="{{ route('roles.show', $role->id) }}"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-sm font-medium">
+                                                        <i class="fa-regular fa-eye mr-1.5"></i> View
+                                                    </a>
+                                                @endcan
 
                                                 {{-- Edit Button --}}
-                                                {{-- @can('access-control-manage') --}}
-                                                @if ($role->id != 1)
-                                                    {{-- Protect Super Admin --}}
-                                                    <a href="{{ route('roles.edit', $role->id) }}"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-sm font-medium">
-                                                        <i class="fa-solid fa-pencil mr-1.5"></i> Edit
-                                                    </a>
-                                                @endif
-                                                {{-- @endcan --}}
+                                                @can('AccessManagement-Edit')
+                                                    @if ($role->id != 1)
+                                                        {{-- Protect Admin --}}
+                                                        <a href="{{ route('roles.edit', $role->id) }}"
+                                                            class="inline-flex items-center px-3 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-sm font-medium">
+                                                            <i class="fa-solid fa-pencil mr-1.5"></i> Edit
+                                                        </a>
+                                                    @endif
+                                                @endcan
 
                                                 {{-- Delete Button --}}
-                                                {{-- @can('access-control-manage') --}}
-                                                @if ($role->id != 1)
-                                                    <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
-                                                        class="inline-block">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded hover:bg-red-100 transition text-sm font-medium"
-                                                            onclick="return confirm('Are you sure you want to delete this role?')">
-                                                            <i class="fa-solid fa-trash mr-1.5"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                                {{-- @endcan --}}
+                                                @can('AccessManagement-Delete')
+                                                    @if ($role->id != 1)
+                                                        <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
+                                                            class="inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded hover:bg-red-100 transition text-sm font-medium"
+                                                                onclick="return confirm('Are you sure you want to delete this role?')">
+                                                                <i class="fa-solid fa-trash mr-1.5"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                @endcan
 
                                             </div>
                                         </td>
