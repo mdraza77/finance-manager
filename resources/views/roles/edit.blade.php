@@ -1,69 +1,121 @@
 @extends('layouts.main')
-@section('title', ' Role Update - Poor Graduate')
+@section('title', 'Role Update - Finance Admin')
+
 @section('content')
-    <main id="main" class="main">
-        <div class="dashboard-header pagetitle">
-            <h1>Update Role Management</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('roles.index') }}"> Role Management</a></li>
+    <main id="main" class="p-6 bg-gray-50 min-h-screen transition-all duration-300">
 
-                    <li class="breadcrumb-item active">Edit</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
+        {{-- Page Header --}}
+        <div class="mb-6 mt-20 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Update Role</h1>
+                    <nav class="flex text-sm text-gray-500 mt-1" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition">Dashboard</a></li>
+                            <li class="flex items-center space-x-2">
+                                <span class="text-gray-400">/</span>
+                                <a href="{{ route('roles.index') }}" class="hover:text-blue-600 transition">Role
+                                    Management</a>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="text-gray-400">/</span>
+                                <span class="font-medium text-gray-700">Edit</span>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                {{-- Back Button --}}
+                <div class="mt-4 md:mt-0">
+                    <a href="{{ route('roles.index') }}"
+                        class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition">
+                        <i class="bi bi-arrow-left mr-2"></i> Back to Roles
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Main Form Section --}}
         <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card pt-4">
-                        <div class="card-body">
-                            <h4 class="card-title">Update New Role</h4>
-                            <small>
-                                <span
-                                    style="color: red; font-weight: bold; background-color: #fff3cd; padding: 3px 6px; border-radius: 4px;" class="p-2">
-                                    ⚠️ Give the <u>Index</u> permission first, then Create, View and Edit
-                                </span>
-                                <br>
-                            </small>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 md:p-8">
 
-                            <!-- Multi Columns Form -->
-                            <form class="row g-3" action="{{ route('roles.update', $role->id) }}" method="POST">
-                                @csrf
-                                @method('Put')
-                                <div class="col-md-4 mt-5">
-                                    <label for="name"><strong>Name <span
-                                                class="required-classes">*</span></strong></label>
-                                    <input type="text" name="name" class="form-control" id="inputName5"
-                                        value="{{ $role->name }}" readonly>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="permission"><strong>Permission<span
-                                                    class="required-classes">*</span></strong>:</strong></label>
-                                        <br />
-                                        @foreach ($permission as $value)
-                                            <label>
-                                                <input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                                                    class="name"{{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
-                                                {{ $value->name }}
-                                            </label>
-                                            <br />
-                                        @endforeach
-                                    </div>
-                                </div>
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Edit Role Permissions</h2>
 
-                                <div class="text-end">
-                                    <a type="button" href="{{ route('roles.index') }}" class="btn btn-secondary">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form><!-- End Multi Columns Form -->
-
+                    {{-- Warning Note --}}
+                    <div class="mb-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-500 mr-3 text-lg"></i>
+                            <p class="text-sm text-yellow-700">
+                                <span class="font-bold">Note:</span> Give the <span
+                                    class="underline font-semibold">Index</span> permission first, then Create, View, and
+                                Edit.
+                            </p>
                         </div>
                     </div>
+
+                    {{-- Form Start --}}
+                    <form action="{{ route('roles.update', $role->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        {{-- Role Name Input (Readonly) --}}
+                        <div class="mb-8 max-w-xl">
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Role Name <span class="text-red-500">*</span>
+                            </label>
+                            {{-- Readonly styling: gray background, disabled cursor, slightly muted text --}}
+                            <input type="text" name="name" id="name" value="{{ $role->name }}" readonly
+                                class="w-full px-4 py-2.5 bg-gray-100 border border-gray-300 rounded-lg text-gray-500 cursor-not-allowed shadow-sm focus:outline-none">
+                            <p class="text-xs text-gray-400 mt-1.5"><i class="bi bi-info-circle mr-1"></i> Core role names
+                                cannot be changed once created.</p>
+                        </div>
+
+                        {{-- Permissions Section --}}
+                        <div class="mb-8">
+                            <label class="block text-sm font-semibold text-gray-700 mb-4">
+                                Update Permissions <span class="text-red-500">*</span>
+                            </label>
+
+                            {{-- Permissions Grid --}}
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                @foreach ($permission as $value)
+                                    <label
+                                        class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 cursor-pointer transition shadow-sm bg-white {{ in_array($value->id, $rolePermissions) ? 'border-blue-500 bg-blue-50/30' : '' }}">
+                                        <div class="flex items-center h-5 mt-0.5">
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                                {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-sm font-medium {{ in_array($value->id, $rolePermissions) ? 'text-blue-700' : 'text-gray-700' }}">
+                                                {{ $value->name }}
+                                            </span>
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Form Action Buttons --}}
+                        <div class="flex justify-end space-x-3 pt-6 border-t border-gray-100">
+                            <a href="{{ route('roles.index') }}"
+                                class="inline-flex items-center px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition">
+                                Cancel
+                            </a>
+                            <button type="submit"
+                                class="inline-flex items-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition">
+                                <i class="bi bi-check-lg mr-2"></i> Update Role
+                            </button>
+                        </div>
+
+                    </form>
+                    {{-- Form End --}}
+
                 </div>
             </div>
         </section>
 
-    </main><!-- End #main -->
+    </main>
 @endsection
