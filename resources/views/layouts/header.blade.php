@@ -106,7 +106,7 @@
                 <div class="pt-4 mt-4 space-y-2 border-t border-gray-100">
                     <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Management</p>
                     <li>
-                        <a href="#"
+                        <a href="{{ route('transactions.index') }}"
                             class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group">
                             <i class="bi bi-cash-stack mr-3"></i>
                             <span>Financial Records</span>
