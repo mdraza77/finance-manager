@@ -1,487 +1,223 @@
 @extends('layouts.main')
-@section('title', 'Update User - Poor Graduate')
+@section('title', 'Update User - Finance Admin')
+
 @section('content')
-    <main id="main" class="main">
-        <div class="container-fluid">
-            <!-- Page Header -->
-            <div class="card card-primary mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h1 class="page-title mb-0">Update User</h1>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="{{ route('users.index') }}">User Management</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Update</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
+    <main id="main" class="p-6 bg-gray-50 min-h-screen transition-all duration-300">
+
+        {{-- Page Header --}}
+        <div class="mb-6 mt-20 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Update User</h1>
+                    <nav class="flex text-sm text-gray-500 mt-1" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2">
+                            <li><a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition">Dashboard</a></li>
+                            <li class="flex items-center space-x-2">
+                                <span class="text-gray-400">/</span>
+                                <a href="{{ route('users.index') }}" class="hover:text-blue-600 transition">User
+                                    Management</a>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="text-gray-400">/</span>
+                                <span class="font-medium text-gray-700">Update</span>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
+        </div>
 
-            <!-- Alert Messages -->
-            @if ($message = Session::get('success'))
-                <div class="tt active">
-                    <div class="tt-content">
-                        <i class="fas fa-solid fa-check check"></i>
-                        <div class="message">
-                            <span class="text text-1">Success</span>
-                            <span class="text text-2"> {{ $message }}</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-xmark close"></i>
-                    <div class="pg active"></div>
+        {{-- Alert Messages --}}
+        @if ($message = Session::get('success'))
+            <div
+                class="mb-6 flex items-center p-4 text-green-800 bg-green-50 rounded-lg border border-green-200 shadow-sm relative">
+                <i class="fas fa-check-circle text-lg mr-3"></i>
+                <div>
+                    <span class="font-bold">Success!</span> <span class="text-sm font-medium">{{ $message }}</span>
                 </div>
-            @endif
+                <button type="button" class="ml-auto text-green-500 hover:text-green-700"
+                    onclick="this.parentElement.remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        @endif
 
-            @if ($errors->any())
-                <div class="tt active">
-                    <div class="tt-content">
-                        <i class="fas fa-solid fa-xmark-circle error"></i>
-                        <div class="message">
-                            <span class="text text-1">Error</span>
-                            <span class="text text-2">User Update Unsuccessful</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-xmark close"></i>
-                    <div class="pg active"></div>
+        @if ($errors->any())
+            <div
+                class="mb-6 flex items-center p-4 text-red-800 bg-red-50 rounded-lg border border-red-200 shadow-sm relative">
+                <i class="fas fa-exclamation-circle text-lg mr-3"></i>
+                <div>
+                    <span class="font-bold">Error!</span> <span class="text-sm font-medium">User Update Unsuccessful. Please
+                        check the form below.</span>
                 </div>
-            @endif
+                <button type="button" class="ml-auto text-red-500 hover:text-red-700"
+                    onclick="this.parentElement.remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        @endif
 
-            <form class="row g-4" action="{{ route('users.update', $user->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <!-- User Information Card -->
-                <div class="col-lg-8">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-user me-2"></i>
-                                User Information
+        {{-- Form Section --}}
+        <form action="{{ route('users.update', $user->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                {{-- Left Column: User Information --}}
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="bg-gray-50 border-b border-gray-100 p-4">
+                            <h5 class="text-lg font-bold text-gray-800 flex items-center">
+                                <i class="fas fa-user text-blue-600 mr-2"></i> User Information
                             </h5>
                         </div>
-                        <div class="card-body">
-                            <div class="row g-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label required">Full Name</label>
-                                        <input type="text" name="name" class="form-control" id="name"
-                                            placeholder="Enter Full Name" value="{{ $user->name }}" required>
-                                        @error('name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+
+                        <div class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                                {{-- Full Name --}}
+                                <div class="md:col-span-2">
+                                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Full Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="name" id="name" value="{{ $user->name }}" required
+                                        class="w-full px-4 py-2.5 bg-white border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm"
+                                        placeholder="Enter Full Name">
+                                    @error('name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email" class="form-label required">Email</label>
-                                        <input type="email" name="email" class="form-control" id="email"
-                                            placeholder="Enter Email Address" value="{{ $user->email }}" required>
-                                        @error('email')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                {{-- Email --}}
+                                <div>
+                                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Email <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="email" name="email" id="email" value="{{ $user->email }}" required
+                                        class="w-full px-4 py-2.5 bg-white border {{ $errors->has('email') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm"
+                                        placeholder="Enter Email Address">
+                                    @error('email')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mobile" class="form-label required">Mobile</label>
-                                        <input type="tel" name="mobile" class="form-control" id="mobile"
-                                            placeholder="Enter Mobile Number"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);"
-                                            value="{{ $user->mobile }}" required>
-                                        @error('mobile')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                {{-- Mobile --}}
+                                <div>
+                                    <label for="mobile" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Mobile <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="tel" name="mobile" id="mobile" value="{{ $user->mobile }}"
+                                        required
+                                        class="w-full px-4 py-2.5 bg-white border {{ $errors->has('mobile') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm"
+                                        placeholder="Enter Mobile Number"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);">
+                                    @error('mobile')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control" id="password"
-                                            placeholder="Enter Password">
-                                        {{-- <small class="form-text text-muted">The password must be at least 8
-                                            characters. Leave blank to keep current password.</small> --}}
-                                        <em class="form-label" style="color: red">The password must be at least 8
-                                            characters. Leave blank to keep current password.</em>
-                                        @error('password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                {{-- Password --}}
+                                <div>
+                                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Password
+                                    </label>
+                                    <input type="password" name="password" id="password"
+                                        class="w-full px-4 py-2.5 bg-white border {{ $errors->has('password') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm"
+                                        placeholder="Enter New Password">
+                                    <p class="text-xs text-yellow-600 mt-1 font-medium">Leave blank to keep current
+                                        password.</p>
+                                    @error('password')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="confirm-password" class="form-label">Confirm Password</label>
-                                        <input type="password" name="confirm-password" class="form-control"
-                                            id="confirm-password" placeholder="Confirm Password">
-                                        @error('confirm-password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                {{-- Confirm Password --}}
+                                <div>
+                                    <label for="confirm-password" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Confirm Password
+                                    </label>
+                                    <input type="password" name="confirm-password" id="confirm-password"
+                                        class="w-full px-4 py-2.5 bg-white border {{ $errors->has('confirm-password') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm"
+                                        placeholder="Confirm New Password">
+                                    @error('confirm-password')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Role Information Card -->
-                <div class="col-lg-4">
-                    <div class="card card-secondary">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-user-tag me-2"></i>
-                                Role Information
+                {{-- Right Column: Role Information & Actions --}}
+                <div class="lg:col-span-1 space-y-6">
+
+                    {{-- Role Assignment Card --}}
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="bg-gray-50 border-b border-gray-100 p-4">
+                            <h5 class="text-lg font-bold text-gray-800 flex items-center">
+                                <i class="fas fa-user-shield text-blue-600 mr-2"></i> Role Assignment
                             </h5>
                         </div>
-                        <div class="card-body">
-                            <div class="row g-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="roles[]" class="form-label required">Role</label>
-                                        <select name="roles[]" class="form-control" id="role__" required>
-                                            <option value="" disabled>Select Role</option>
-                                            @foreach ($roles as $role)
-                                                <option value="{{ $role->id }}"
-                                                    {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>
-                                                    {{ $role->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('roles[]')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="p-6">
+                            <label for="role__" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Select Role <span class="text-red-500">*</span>
+                            </label>
+
+                            <select name="roles[]" id="role__" required
+                                class="w-full px-4 py-2.5 bg-white border {{ $errors->has('roles') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm">
+                                <option value="" disabled>Select Role</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}"
+                                        {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>
+                                        {{ $role->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('roles')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
-                </div>
-        </div>
 
-        <!-- Form Actions -->
-        <div class="card card-action mt-4">
-            <div class="card-body">
-                <div class="action-buttons">
-                    @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>
-                            Update User
-                        </button>
-                    @else
-                        <div class="alert alert-warning d-inline-block py-2 px-3 mb-0" style="font-size: 0.85rem;">
-                            <i class="fas fa-lock me-2"></i> Admin profiles cannot be updated from here.
+                    {{-- Actions Card --}}
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden p-6">
+                        <div class="flex flex-col space-y-3">
+
+                            {{-- Admin Protection Logic --}}
+                            @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
+                                <button type="submit"
+                                    class="w-full inline-flex justify-center items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-sm transition">
+                                    <i class="fas fa-save mr-2"></i> Update User
+                                </button>
+                            @else
+                                <div
+                                    class="p-3 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm font-medium rounded-lg text-center">
+                                    <i class="fas fa-lock mr-1"></i> Admin profiles cannot be updated from here.
+                                </div>
+                            @endif
+
+                            <a href="{{ route('users.index') }}"
+                                class="w-full inline-flex justify-center items-center px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg transition">
+                                <i class="fas fa-arrow-left mr-2"></i> Back to Users
+                            </a>
                         </div>
-                    @endif
-                    <a class="btn btn-secondary" href="{{ route('users.index') }}">
-                        <i class="fas fa-arrow-left me-2"></i>
-                        Back to Users
-                    </a>
+                    </div>
+
                 </div>
             </div>
-        </div>
         </form>
-        </div>
+
     </main>
 
-    <style>
-        /* Design System Variables */
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --success-color: #4cc9f0;
-            --info-color: #4895ef;
-            --warning-color: #f72585;
-            --danger-color: #e63946;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-400: #ced4da;
-            --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
-            --gray-900: #212529;
-
-            --border-radius: 8px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-            --card-padding: 1.5rem;
-            --card-border: 1px solid var(--gray-200);
-        }
-
-        /* Card Header Section */
-        .card-header-section {
-            border-left: 4px solid var(--info-color);
-        }
-
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 0.25rem;
-        }
-
-        .breadcrumb {
-            background-color: transparent;
-            padding: 0;
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        .breadcrumb-item {
-            display: flex;
-            align-items: center;
-        }
-
-        .breadcrumb-item a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .breadcrumb-item a:hover {
-            color: var(--secondary-color);
-        }
-
-        .breadcrumb-item+.breadcrumb-item::before {
-            content: ">";
-            color: var(--gray-400);
-            padding: 0 0.5rem;
-        }
-
-        .breadcrumb-item.active {
-            color: var(--gray-700);
-            font-weight: 500;
-        }
-
-        /* Alert Styles */
-        .alert {
-            border: none;
-            border-radius: var(--border-radius);
-            padding: 0.75rem 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .alert-body {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .alert-success {
-            background-color: #d1e7dd;
-            color: #0f5132;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #842029;
-        }
-
-        .btn-close {
-            background: none;
-            border: none;
-            opacity: 0.5;
-        }
-
-        .btn-close:hover {
-            opacity: 1;
-        }
-
-        /* Card Styles */
-        .card {
-            border: var(--card-border);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-            transition: box-shadow 0.15s ease;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-primary {
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .card-secondary {
-            border-left: 4px solid var(--success-color);
-        }
-
-        .card-tertiary {
-            border-left: 4px solid var(--warning-color);
-        }
-
-        .card-action {
-            border-left: 4px solid var(--success-color);
-        }
-
-        .card-header {
-            background-color: white;
-            border-bottom: 1px solid var(--gray-200);
-            padding: 1rem var(--card-padding);
-            border-top-left-radius: var(--border-radius);
-            border-top-right-radius: var(--border-radius);
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-body {
-            padding: var(--card-padding);
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 500;
-            color: var(--gray-700);
-            margin-bottom: 0.375rem;
-            font-size: 0.9rem;
-        }
-
-        .required::after {
-            content: " *";
-            color: var(--danger-color);
-        }
-
-        .form-control {
-            display: block;
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.9rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--gray-700);
-            background-color: white;
-            background-clip: padding-box;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--border-radius);
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        .form-control:focus {
-            color: var(--gray-700);
-            background-color: white;
-            border-color: var(--primary-color);
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
-        }
-
-        .form-control:read-only {
-            background-color: var(--gray-100);
-            opacity: 1;
-        }
-
-        .form-control:read-only:focus {
-            border-color: var(--gray-300);
-        }
-
-        .form-control.is-invalid {
-            border-color: var(--danger-color);
-        }
-
-        .form-control.is-invalid:focus {
-            border-color: var(--danger-color);
-            box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
-        }
-
-        .invalid-feedback {
-            display: block;
-            width: 100%;
-            margin-top: 0.375rem;
-            font-size: 0.875rem;
-            color: var(--danger-color);
-        }
-
-        /* Button Styles */
-        .btn {
-            display: inline-block;
-            font-weight: 500;
-            text-align: center;
-            vertical-align: middle;
-            user-select: none;
-            border: 1px solid transparent;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            border-radius: var(--border-radius);
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        .btn-primary {
-            color: #fff;
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            color: #fff;
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-
-        .btn-secondary {
-            color: #fff;
-            background-color: var(--gray-600);
-            border-color: var(--gray-600);
-        }
-
-        .btn-secondary:hover {
-            color: #fff;
-            background-color: var(--gray-700);
-            border-color: var(--gray-700);
-        }
-
-        .btn i {
-            font-size: 0.9rem;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
-
+    {{-- Select2 Initialization --}}
     <script>
         $(document).ready(function() {
-            $('#role__').select2({});
+            $('#role__').select2({
+                width: '100%',
+                placeholder: "Select Role"
+            });
         });
     </script>
 @endsection
