@@ -152,7 +152,7 @@
 
                                                 @can('Transaction-View')
                                                     <a href="{{ route('transactions.show', $transaction->id) }}"
-                                                        class="inline-flex items-center px-2.5 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-xs font-medium"
+                                                        class="inline-flex items-center px-2.5 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-xs font-medium no-export"
                                                         title="View">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
@@ -160,7 +160,7 @@
 
                                                 @can('Transaction-Edit')
                                                     <a href="{{ route('transactions.edit', $transaction->id) }}"
-                                                        class="inline-flex items-center px-2.5 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-xs font-medium"
+                                                        class="inline-flex items-center px-2.5 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-xs font-medium no-export"
                                                         title="Edit">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </a>
@@ -169,7 +169,7 @@
                                                 @can('Transaction-Delete')
                                                     <form method="POST"
                                                         action="{{ route('transactions.destroy', $transaction->id) }}"
-                                                        class="inline-block">
+                                                        class="inline-block no-export">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"

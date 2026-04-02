@@ -47,6 +47,271 @@
             }
         }
     </style>
+
+
+
+    {{-- 1. DataTables v2.3.7 TAILWIND CSS & Buttons CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.tailwindcss.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.min.css">
+
+    {{-- 2. jQuery (Required) --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    {{-- 3. DataTables v2.3.7 Core & Tailwind JS --}}
+    <script src="https://cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.7/js/dataTables.tailwindcss.min.js"></script>
+
+    {{-- 4. Export Buttons JS --}}
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+
+    {{-- 5. Initialization Script --}}
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable for Transactions
+            if ($('#transactions_table').length) {
+                $('#transactions_table').DataTable({
+                    responsive: true,
+                    pageLength: 10,
+                    order: [[4, 'desc']], // Sort by date column (index 4) descending
+                    layout: {
+                        topStart: {
+                            buttons: [
+                                {
+                                    extend: 'copy',
+                                    className: 'dt-button bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-copy mr-1"></i> Copy'
+                                },
+                                {
+                                    extend: 'csv',
+                                    className: 'dt-button bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-file-csv mr-1"></i> CSV'
+                                },
+                                {
+                                    extend: 'excel',
+                                    className: 'dt-button bg-green-50 hover:bg-green-100 text-green-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-file-excel mr-1"></i> Excel'
+                                },
+                                {
+                                    extend: 'pdf',
+                                    className: 'dt-button bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-file-pdf mr-1"></i> PDF'
+                                },
+                                {
+                                    extend: 'print',
+                                    className: 'dt-button bg-gray-800 hover:bg-gray-900 text-white px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-print mr-1"></i> Print'
+                                }
+                            ]
+                        }
+                    },
+                    language: {
+                        search: "",
+                        searchPlaceholder: "Search records...",
+                        lengthMenu: "Show _MENU_ entries",
+                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                        infoEmpty: "No entries available",
+                        infoFiltered: "(filtered from _MAX_ total entries)",
+                        paginate: {
+                            first: '<i class="fas fa-angle-double-left"></i>',
+                            last: '<i class="fas fa-angle-double-right"></i>',
+                            next: '<i class="fas fa-angle-right"></i>',
+                            previous: '<i class="fas fa-angle-left"></i>'
+                        }
+                    },
+                    columnDefs: [
+                        {
+                            orderable: false,
+                            targets: [6] // Disable sorting on Actions column
+                        },
+                        {
+                            targets: [1, 2], // Don't export badge HTML
+                            render: function(data, type, row) {
+                                if (type === 'export') {
+                                    return $(data).text().trim();
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    dom: "<'flex flex-col md:flex-row md:items-center md:justify-between mb-4'<'mb-4 md:mb-0'l><'f'>>" +
+                         "<'flex flex-col md:flex-row md:items-center md:justify-between mb-4'<'mb-4 md:mb-0'B><'dt-length'>>" +
+                         "<'t'ip><'flex flex-col md:flex-row md:items-center md:justify-between mt-4'p>",
+                });
+            }
+
+            // Initialize DataTable for Users (if exists)
+            if ($('#User_Management_table').length) {
+                $('#User_Management_table').DataTable({
+                    responsive: true,
+                    pageLength: 10,
+                    order: [[0, 'asc']],
+                    layout: {
+                        topStart: {
+                            buttons: [
+                                {
+                                    extend: 'copy',
+                                    className: 'dt-button bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-copy mr-1"></i> Copy'
+                                },
+                                {
+                                    extend: 'csv',
+                                    className: 'dt-button bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-file-csv mr-1"></i> CSV'
+                                },
+                                {
+                                    extend: 'excel',
+                                    className: 'dt-button bg-green-50 hover:bg-green-100 text-green-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-file-excel mr-1"></i> Excel'
+                                },
+                                {
+                                    extend: 'pdf',
+                                    className: 'dt-button bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-file-pdf mr-1"></i> PDF'
+                                },
+                                {
+                                    extend: 'print',
+                                    className: 'dt-button bg-gray-800 hover:bg-gray-900 text-white px-3 py-1.5 rounded-md text-sm font-medium transition',
+                                    text: '<i class="fas fa-print mr-1"></i> Print'
+                                }
+                            ]
+                        }
+                    },
+                    language: {
+                        search: "",
+                        searchPlaceholder: "Search users...",
+                        lengthMenu: "Show _MENU_ entries",
+                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                        infoEmpty: "No entries available",
+                        infoFiltered: "(filtered from _MAX_ total entries)",
+                        paginate: {
+                            first: '<i class="fas fa-angle-double-left"></i>',
+                            last: '<i class="fas fa-angle-double-right"></i>',
+                            next: '<i class="fas fa-angle-right"></i>',
+                            previous: '<i class="fas fa-angle-left"></i>'
+                        }
+                    },
+                    columnDefs: [
+                        {
+                            orderable: false,
+                            targets: [5, 6] // Disable sorting on Status and Action columns
+                        }
+                    ],
+                    dom: "<'flex flex-col md:flex-row md:items-center md:justify-between mb-4'<'mb-4 md:mb-0'l><'f'>>" +
+                         "<'flex flex-col md:flex-row md:items-center md:justify-between mb-4'<'mb-4 md:mb-0'B><'dt-length'>>" +
+                         "<'t'ip><'flex flex-col md:flex-row md:items-center md:justify-between mt-4'p>",
+                });
+            }
+        });
+    </script>
+
+    {{-- 6. Custom Styling for DataTables --}}
+    <style>
+        /* DataTables Buttons Styling */
+        .dt-buttons .dt-button {
+            margin-right: 0.5rem !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        /* DataTables Container Styling */
+        div.dataTables_wrapper div.dataTables_length {
+            padding-bottom: 0.5rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            padding-bottom: 0.5rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_info {
+            padding-top: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            padding-top: 0.5rem;
+        }
+
+        /* Pagination Buttons */
+        div.dataTables_wrapper div.dataTables_paginate .paginate_button {
+            border: 1px solid #e5e7eb !important;
+            background: white !important;
+            color: #374151 !important;
+            margin-left: 0.25rem;
+            border-radius: 0.375rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate .paginate_button:hover {
+            background: #f3f4f6 !important;
+            color: #1f2937 !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate .paginate_button.current {
+            background: #3b82f6 !important;
+            color: white !important;
+            border-color: #3b82f6 !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate .paginate_button.disabled {
+            color: #9ca3af !important;
+            cursor: not-allowed;
+        }
+
+        /* Search Input Styling */
+        div.dataTables_wrapper div.dataTables_filter input {
+            border: 1px solid #d1d5db !important;
+            border-radius: 0.5rem !important;
+            padding: 0.5rem 0.75rem !important;
+            margin-left: 0.5rem !important;
+            outline: none !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter input:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        /* Length Select Styling */
+        div.dataTables_wrapper div.dataTables_length select {
+            border: 1px solid #d1d5db !important;
+            border-radius: 0.5rem !important;
+            padding: 0.5rem 2rem 0.5rem 0.75rem !important;
+            margin: 0 0.25rem !important;
+            outline: none !important;
+            background-color: white !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        /* Table Styling */
+        table.dataTable {
+            border-collapse: collapse !important;
+            width: 100% !important;
+        }
+
+        table.dataTable thead th {
+            border-bottom: 2px solid #e5e7eb !important;
+            padding: 0.75rem 1rem !important;
+        }
+
+        table.dataTable tbody td {
+            padding: 0.75rem 1rem !important;
+            border-bottom: 1px solid #f3f4f6 !important;
+        }
+
+        /* Responsive DataTable */
+        div.dataTables_wrapper div.dataTables_scroll {
+            border-radius: 0.5rem;
+        }
+    </style>
 </head>
 
 {{-- Body par 'sidebar-open' default rakha hai taaki page load par margin sahi rahe --}}

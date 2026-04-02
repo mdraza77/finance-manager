@@ -160,7 +160,8 @@
 
                                                 @can('UserManagement-View')
                                                     <a href="{{ route('users.show', $user->id) }}"
-                                                        class="inline-flex items-center px-2.5 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-xs font-medium title="View">
+                                                        class="inline-flex items-center px-2.5 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-xs font-medium no-export"
+                                                        title="View">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
                                                 @endcan
@@ -170,7 +171,7 @@
                                                     @can('UserManagement-Edit')
                                                         @if ($user->deleted_at == null)
                                                             <a href="{{ route('users.edit', $user->id) }}"
-                                                                class="inline-flex items-center px-2.5 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-xs font-medium"
+                                                                class="inline-flex items-center px-2.5 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-xs font-medium no-export"
                                                                 title="Edit">
                                                                 <i class="fa-solid fa-pencil"></i>
                                                             </a>
@@ -183,7 +184,7 @@
                                                             {{-- Activate Button --}}
                                                             <form method="POST"
                                                                 action="{{ route('users.restore', $user->id) }}"
-                                                                class="inline-block">
+                                                                class="inline-block no-export">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit"
@@ -197,7 +198,7 @@
                                                             {{-- Inactive Button --}}
                                                             <form method="POST"
                                                                 action="{{ route('users.destroy', $user->id) }}"
-                                                                class="inline-block">
+                                                                class="inline-block no-export">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit"
