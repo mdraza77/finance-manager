@@ -65,7 +65,7 @@ A comprehensive web-based finance management system built with Laravel for track
 
 1. **Clone the repository**
    ```bash
-   git clone (https://github.com/mdraza77/finance-manager.git)
+   git clone https://github.com/mdraza77/finance-manager.git
    cd finance-manager
    ```
 
@@ -103,8 +103,8 @@ A comprehensive web-based finance management system built with Laravel for track
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=finance_manager
-   DB_USERNAME=root
-   DB_PASSWORD=
+   DB_USERNAME=[Your Username]
+   DB_PASSWORD=[Your Password]
    ```
 
 6. **Run migrations**
