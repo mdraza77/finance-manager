@@ -15,13 +15,13 @@ $(document).ready(function () {
             [10, 25, 50, "All"],
         ],
         layout: {
-            top1: {
-                searchPanes: {
-                    viewTotal: true,
-                    columns: [0, 1],
-                    initCollapsed: true,
-                },
-            },
+            // top1: {
+            //     searchPanes: {
+            //         viewTotal: true,
+            //         columns: [0, 1],
+            //         initCollapsed: true,
+            //     },
+            // },
             topStart: {
                 buttons: [
                     {
@@ -30,7 +30,7 @@ $(document).ready(function () {
                     {
                         extend: "excel",
                         text: "Excel",
-                        title: "SunilSteel ( User Management Details ) ",
+                        title: "Finance Pro ( User Management Details ) ",
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5],
                             format: {
@@ -44,14 +44,26 @@ $(document).ready(function () {
                             },
                         },
                     },
-                    // {
-                    //     extend: "print",
-                    //     text: "Print",
-                    //     title: "SunilSteel ( User Management Details )",
-                    //     exportOptions: {
-                    //         columns: [0, 1, 2, 3, 4, 5, 6],
-                    //     },
-                    // },
+                    {
+                        extend: "pdf",
+                        text: '<i class="fas fa-file-pdf mr-1"></i> PDF',
+                        title: "FinancePRO ( Role Management )",
+                        className:
+                            "bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-sm font-medium transition ml-2 border border-red-200",
+                        exportOptions: {
+                            columns: ":not(:last-child)",
+                        },
+                    },
+                    {
+                        extend: "print",
+                        text: '<i class="fas fa-print mr-1"></i> Print',
+                        title: "FinancePRO ( Role Management )",
+                        className:
+                            "bg-gray-800 hover:bg-gray-900 text-black px-3 py-1.5 rounded-md text-sm font-medium transition ml-2",
+                        exportOptions: {
+                            columns: ":not(:last-child)",
+                        },
+                    },
                 ],
             },
         },
@@ -66,6 +78,90 @@ $(document).ready(function () {
 
     // Initialize DataTables
     let dt = new DataTable("#User_Management_table", options);
+});
+
+// transactions_table
+// -------------------------- Transactions Management --------------------------------------
+$(document).ready(function () {
+    let options = {
+        responsive: true,
+        // fixedColumns: {
+        //     start: 1,
+        //     end: 1,
+        // },
+        fixedHeader: true,
+        paging: true,
+        scrollCollapse: false,
+        scrollX: true,
+        scrollY: 450,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+        ],
+        layout: {
+            // top1: {
+            //     searchPanes: {
+            //         viewTotal: true,
+            //         columns: [0, 1],
+            //         initCollapsed: true,
+            //     },
+            // },
+            topStart: {
+                buttons: [
+                    {
+                        extend: "pageLength",
+                    },
+                    {
+                        extend: "excel",
+                        text: "Excel",
+                        title: "Finance Pro ( Transactions Management Details )",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5],
+                            format: {
+                                body: function (data, row, column, node) {
+                                    // Convert HTML → plain text
+                                    var text = $("<div>").html(data).text();
+
+                                    // Multiple spaces / line-breaks ko single space bana do
+                                    return text.replace(/\s+/g, " ").trim();
+                                },
+                            },
+                        },
+                    },
+                    {
+                        extend: "pdf",
+                        text: '<i class="fas fa-file-pdf mr-1"></i> PDF',
+                        title: "FinancePRO ( Role Management )",
+                        className:
+                            "bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-sm font-medium transition ml-2 border border-red-200",
+                        exportOptions: {
+                            columns: ":not(:last-child)",
+                        },
+                    },
+                    {
+                        extend: "print",
+                        text: '<i class="fas fa-print mr-1"></i> Print',
+                        title: "FinancePRO ( Role Management )",
+                        className:
+                            "bg-gray-800 hover:bg-gray-900 text-black px-3 py-1.5 rounded-md text-sm font-medium transition ml-2",
+                        exportOptions: {
+                            columns: ":not(:last-child)",
+                        },
+                    },
+                ],
+            },
+        },
+    };
+    // Agar mobile nahi hai (desktop/tablet) tab hi fixedColumns add karo
+    if (!isMobile) {
+        options.scrollX = true;
+        options.fixedColumns = {
+            end: 1,
+        };
+    }
+
+    // Initialize DataTables
+    let dt = new DataTable("#transactions_table", options);
 });
 
 // Role_Management_table
@@ -87,13 +183,13 @@ $(document).ready(function () {
             [10, 25, 50, "All"],
         ],
         layout: {
-            top1: {
-                searchPanes: {
-                    viewTotal: true,
-                    columns: [0, 1],
-                    initCollapsed: true,
-                },
-            },
+            // top1: {
+            //     searchPanes: {
+            //         viewTotal: true,
+            //         columns: [0, 1],
+            //         initCollapsed: true,
+            //     },
+            // },
             topStart: {
                 buttons: [
                     {
@@ -102,9 +198,9 @@ $(document).ready(function () {
                     {
                         extend: "excel",
                         text: "Excel",
-                        title: "SunilSteel ( Role Management Details )",
+                        title: "Finance Pro ( Role Management )",
                         exportOptions: {
-                            columns: [0, 1],
+                            columns: [0, 1, 2, 3, 4, 5],
                             format: {
                                 body: function (data, row, column, node) {
                                     // Convert HTML → plain text
@@ -116,14 +212,26 @@ $(document).ready(function () {
                             },
                         },
                     },
-                    // {
-                    //     extend: "print",
-                    //     text: "Print",
-                    //     title: "SunilSteel ( Role Management Details )",
-                    //     exportOptions: {
-                    //         columns: [0, 1],
-                    //     },
-                    // },
+                    {
+                        extend: "pdf",
+                        text: '<i class="fas fa-file-pdf mr-1"></i> PDF',
+                        title: "FinancePRO ( Role Management )",
+                        className:
+                            "bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-md text-sm font-medium transition ml-2 border border-red-200",
+                        exportOptions: {
+                            columns: ":not(:last-child)",
+                        },
+                    },
+                    {
+                        extend: "print",
+                        text: '<i class="fas fa-print mr-1"></i> Print',
+                        title: "FinancePRO ( Role Management )",
+                        className:
+                            "bg-gray-800 hover:bg-gray-900 text-black px-3 py-1.5 rounded-md text-sm font-medium transition ml-2",
+                        exportOptions: {
+                            columns: ":not(:last-child)",
+                        },
+                    },
                 ],
             },
         },
