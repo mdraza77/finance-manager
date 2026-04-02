@@ -177,7 +177,7 @@
                         </div>
                         <div class="p-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                                {{-- <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                                     <div class="bg-blue-100 p-2 rounded-full">
                                         <i class="fas fa-user text-blue-600"></i>
                                     </div>
@@ -185,7 +185,7 @@
                                         <p class="text-xs text-gray-500">User ID</p>
                                         <p class="text-sm font-semibold text-gray-800">#{{ $user->id }}</p>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                                     <div class="bg-green-100 p-2 rounded-full">
                                         <i class="fas fa-envelope text-green-600"></i>
