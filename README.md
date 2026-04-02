@@ -1,41 +1,53 @@
 # Finance Manager
 
-A comprehensive web-based finance management system built with Laravel for tracking income, expenses, and financial transactions.
+A comprehensive web-based finance management system built with Laravel for tracking income, expenses, and financial transactions with role-based access control.
 
-![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel)
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat&logo=php)
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?style=flat&logo=laravel)
+![PHP](https://img.shields.io/badge/PHP-8.3+-777BB4?style=flat&logo=php)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.0-38B2AC?style=flat&logo=tailwindcss)
+![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?style=flat&logo=postgresql)
 
 ---
 
 ## 📋 Features
 
-- **Dashboard Analytics**
-  - Total Income, Expenses, and Net Balance
-  - Category-wise breakdown
-  - Monthly trends chart
-  - Recent activity overview
+### Dashboard Analytics
+- Total Income, Expenses, and Net Balance
+- Category-wise breakdown
+- Monthly trends chart (last 6 months)
+- Recent activity overview
+- Interactive Chart.js visualizations
 
-- **Transaction Management**
-  - Record income and expenses
-  - Categorize transactions
-  - Edit and delete transactions
-  - View transaction history
+### Transaction Management
+- Record income and expenses
+- Categorize transactions (Salary, Rent, Food, Transport, etc.)
+- Edit and delete transactions
+- View transaction history with user details
+- Soft delete support
 
-- **User Management**
-  - Role-based access control
-  - Multiple user roles (Admin, User, etc.)
-  - Permission-based actions
+### User Management
+- Role-based access control (Admin, Analyst, Viewer)
+- Permission-based actions
+- User creation, editing, and deletion
+- Soft delete with restore functionality
+- Mobile number support
 
-- **Data Export**
-  - Export to Excel, PDF, CSV
-  - Print-friendly reports
-  - Search and filter functionality
+### Roles & Permissions
+- Granular permission system via Spatie
+- Custom role creation
+- Permission assignment per role
 
-- **Responsive Design**
-  - Mobile-friendly interface
-  - Modern TailwindCSS UI
-  - Smooth animations
+### Data Export
+- Export to Excel, PDF, CSV
+- Print-friendly reports
+- Search and filter functionality
+- DataTables with sorting
+
+### Responsive Design
+- Mobile-friendly interface
+- Modern TailwindCSS UI
+- Collapsible sidebar
+- Smooth animations
 
 ---
 
@@ -43,17 +55,17 @@ A comprehensive web-based finance management system built with Laravel for track
 
 ### Prerequisites
 
-- PHP 8.2 or higher
+- PHP 8.3 or higher
 - Composer
-- Node.js & NPM
-- MySQL/PostgreSQL
+- Node.js 18+ & NPM
+- PostgreSQL or MySQL
 - Git
 
 ### Step-by-Step Setup
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone (https://github.com/mdraza77/finance-manager.git)
    cd finance-manager
    ```
 
@@ -75,7 +87,17 @@ A comprehensive web-based finance management system built with Laravel for track
 
 5. **Configure database**
    
-   Update `.env` file with your database credentials:
+   Update `.env` file (default is PostgreSQL):
+   ```env
+   DB_CONNECTION=pgsql
+   DB_HOST=127.0.0.1
+   DB_PORT=5432
+   DB_DATABASE=finance_manager
+   DB_USERNAME=[Your Username]
+   DB_PASSWORD=[Your Password]
+   ```
+   
+   Or for MySQL:
    ```env
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
@@ -90,14 +112,14 @@ A comprehensive web-based finance management system built with Laravel for track
    php artisan migrate
    ```
 
-7. **Build assets**
-   ```bash
-   npm run build
-   ```
-
-8. **Create admin user** (if seeder exists)
+7. **Seed the database** (creates admin user & permissions)
    ```bash
    php artisan db:seed
+   ```
+
+8. **Build assets**
+   ```bash
+   npm run build
    ```
 
 9. **Start development server**
@@ -118,33 +140,61 @@ A comprehensive web-based finance management system built with Laravel for track
 finance-manager/
 ├── app/
 │   ├── Http/
-│   │   ├── Controllers/     # TransactionController, UserController, etc.
+│   │   ├── Controllers/
+│   │   │   ├── DashboardController.php
+│   │   │   ├── TransactionController.php
+│   │   │   ├── UserController.php
+│   │   │   ├── RoleController.php
+│   │   │   └── ProfileController.php
 │   │   └── Middleware/
-│   ├── Models/              # Transaction, User, Role
+│   ├── Models/
+│   │   ├── User.php
+│   │   └── Transaction.php
 │   └── ...
 ├── resources/
 │   ├── views/
-│   │   ├── layouts/         # Header, Footer
-│   │   ├── dashboard/       # Dashboard views
-│   │   ├── transactions/    # Transaction CRUD views
-│   │   └── users/           # User management views
+│   │   ├── layouts/
+│   │   │   ├── header.blade.php
+│   │   │   └── main.blade.php
+│   │   ├── dashboard/
+│   │   │   └── index.blade.php
+│   │   ├── transactions/
+│   │   │   ├── index.blade.php
+│   │   │   ├── create.blade.php
+│   │   │   ├── edit.blade.php
+│   │   │   └── show.blade.php
+│   │   ├── users/
+│   │   │   ├── index.blade.php
+│   │   │   ├── create.blade.php
+│   │   │   ├── edit.blade.php
+│   │   │   └── show.blade.php
+│   │   └── roles/
 │   └── js/
 ├── database/
 │   ├── migrations/
+│   │   ├── 0001_01_01_000000_create_users_table.php
+│   │   ├── 2026_04_01_135047_create_permission_tables.php
+│   │   ├── 2026_04_01_181342_add_mobile_to_users_table.php
+│   │   ├── 2026_04_01_181851_add_soft_delete_to_users_table.php
+│   │   └── 2026_04_01_194138_create_transactions_table.php
 │   └── seeders/
-└── routes/
-    └── web.php
+│       ├── DatabaseSeeder.php
+│       ├── UserSeeder.php
+│       └── PermissionSeeder.php
+├── routes/
+│   └── web.php
+└── public/
 ```
 
 ---
 
 ## 🔐 Default Credentials
 
-After running the seeder, you can login with:
+After running the seeder, login with:
 
-| Role  | Email              | Password |
-|-------|--------------------|----------|
-| Admin | admin@gmail.com  | Success2026$ |
+| Role  | Email             | Password        |
+|-------|-------------------|-----------------|
+| Admin | admin@gmail.com   | Success2026$    |
 
 > ⚠️ **Change default credentials immediately in production!**
 
@@ -152,13 +202,26 @@ After running the seeder, you can login with:
 
 ## 📊 Database Schema
 
+### Users Table
+| Column           | Type         | Description              |
+|------------------|--------------|--------------------------|
+| id               | bigint       | Primary key              |
+| name             | string       | User full name           |
+| email            | string       | Unique email             |
+| password         | string       | Hashed password          |
+| mobile           | string       | 10-digit mobile number   |
+| remember_token   | string       | Session token            |
+| created_at       | timestamp    | Record creation time     |
+| updated_at       | timestamp    | Record update time       |
+| deleted_at       | timestamp    | Soft delete timestamp    |
+
 ### Transactions Table
 | Column           | Type         | Description              |
 |------------------|--------------|--------------------------|
 | id               | bigint       | Primary key              |
 | user_id          | bigint       | Foreign key to users     |
 | type             | enum         | 'income' or 'expense'    |
-| amount           | decimal      | Transaction amount       |
+| amount           | decimal(15,2)| Transaction amount       |
 | category         | string       | Category name            |
 | transaction_date | date         | Date of transaction      |
 | description      | text         | Optional notes           |
@@ -168,81 +231,138 @@ After running the seeder, you can login with:
 
 ---
 
+## 🔒 Roles & Permissions
+
+### Available Roles
+
+| Role     | Description                              |
+|----------|------------------------------------------|
+| Admin    | Full access to all features              |
+| Analyst  | Data analysis and record entry           |
+| Viewer   | Read-only access to dashboard & records  |
+
+### Available Permissions
+
+| Module              | Permissions                              |
+|---------------------|------------------------------------------|
+| Dashboard           | Dashboard-View, Analytics-View           |
+| Transactions        | Transaction-Index, Create, Edit, View, Delete |
+| User Management     | UserManagement-Index, Create, Edit, View, Delete |
+| Access Management   | AccessManagement-Index, Create, Edit, View, Delete |
+
+### Permission Assignment
+
+```php
+// Admin: All permissions
+$admin->syncPermissions(Permission::all());
+
+// Analyst: Limited permissions
+$analyst->syncPermissions([
+    'Dashboard-View',
+    'Analytics-View',
+    'Transaction-Index',
+    'Transaction-Create',
+    'Transaction-Edit',
+    'Transaction-View',
+]);
+
+// Viewer: Read-only
+$viewer->syncPermissions([
+    'Dashboard-View',
+    'Transaction-Index',
+    'Analytics-View',
+    'Transaction-View',
+]);
+```
+
+---
+
 ## 🛠️ Available Commands
 
 ```bash
+# Setup (fresh install)
+composer setup
+
 # Run migrations
 php artisan migrate
 
-# Seed database
+# Seed database (creates admin user)
 php artisan db:seed
+
+# Fresh migration with seed
+php artisan migrate:fresh --seed
 
 # Clear caches
 php artisan cache:clear
 php artisan config:clear
 php artisan view:clear
 
-# Run development server
-php artisan serve
+# Run development server (with queue & Vite)
+composer run dev
 
-# Build assets (development)
-npm run dev
-
-# Build assets (production)
-npm run build
+# Build assets
+npm run dev      # Development (watch mode)
+npm run build    # Production
 
 # Run tests
-php artisan test
+composer test
 ```
-
----
-
-## 🔒 Permissions & Roles
-
-The application uses Spatie Permission package for role-based access control.
-
-### Available Permissions
-
-| Permission              | Description                    |
-|-------------------------|--------------------------------|
-| Dashboard-View          | Access dashboard               |
-| Transaction-Index       | View transactions              |
-| Transaction-Create      | Create new transaction         |
-| Transaction-Edit        | Edit transactions              |
-| Transaction-View        | View single transaction        |
-| Transaction-Delete      | Delete transactions            |
-| UserManagement-Index    | View users                     |
-| UserManagement-Create   | Create new user                |
-| UserManagement-Edit     | Edit users                     |
-| UserManagement-Delete   | Delete/Deactivate users        |
 
 ---
 
 ## 🎨 Technologies Used
 
-| Technology     | Purpose                    |
-|----------------|----------------------------|
-| Laravel 11     | Backend Framework          |
-| TailwindCSS    | Styling                    |
-| jQuery         | DOM Manipulation           |
-| DataTables     | Table with sorting/export  |
-| Chart.js       | Analytics charts           |
-| Font Awesome   | Icons                      |
-| Spatie Permission | Role & Permission management |
+| Technology         | Version | Purpose                      |
+|--------------------|---------|------------------------------|
+| Laravel            | 13.x    | Backend Framework            |
+| PHP                | 8.3+    | Server-side Language         |
+| TailwindCSS        | 3.x     | Styling                      |
+| jQuery             | 3.7.1   | DOM Manipulation             |
+| DataTables         | 2.3.7   | Tables with sorting/export   |
+| Chart.js           | Latest  | Analytics charts             |
+| Font Awesome       | 6.4.0   | Icons                        |
+| Bootstrap Icons    | 1.11.1  | Additional icons             |
+| Spatie Permission  | 7.2     | Role & Permission management |
+| PostgreSQL/MySQL   | Latest  | Database                     |
 
 ---
 
-## 📝 API Endpoints
+## 📝 Routes Overview
 
-*(If API is implemented)*
+### Protected Routes (Require Authentication)
 
-| Method | Endpoint              | Description           |
-|--------|-----------------------|-----------------------|
-| GET    | /api/transactions     | Get all transactions |
-| POST   | /api/transactions     | Create transaction   |
-| GET    | /api/transactions/{id}| Get single transaction|
-| PUT    | /api/transactions/{id}| Update transaction   |
-| DELETE | /api/transactions/{id}| Delete transaction   |
+```php
+GET  /                    → Dashboard
+GET  /dashboard          → Dashboard
+GET  /profile            → Profile edit
+PATCH /profile           → Profile update
+DELETE /profile          → Delete account
+
+// Users
+GET  /users              → User list
+GET  /user/create        → Create user form
+POST /user/store         → Store user
+GET  /user/show/{id}     → View user
+GET  /user/edit/{id}     → Edit user form
+PUT  /user/update/{id}   → Update user
+DELETE /user/delete/{id} → Delete user
+DELETE /user/restore/{id}→ Restore user
+
+// Roles & Permissions
+GET  /roles              → Role list
+GET  /roles/create       → Create role form
+POST /roles              → Store role
+// ... (full resource)
+
+// Transactions
+GET  /transactions       → Transaction list
+GET  /transactions/create → Create transaction
+POST /transactions       → Store transaction
+GET  /transactions/{id}  → View transaction
+GET  /transactions/{id}/edit → Edit transaction
+PUT  /transactions/{id}  → Update transaction
+DELETE /transactions/{id}→ Delete transaction
+```
 
 ---
 
@@ -268,8 +388,35 @@ php artisan view:clear
 
 **4. Database connection error**
 - Check `.env` database credentials
-- Ensure database server is running
+- Ensure PostgreSQL/MySQL is running
 - Verify database exists
+
+**5. Permission/Role errors**
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan db:seed
+```
+
+**6. Spatie Permission cache issue**
+```bash
+php artisan permission:cache-clear
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+composer test
+
+# Run tests with coverage
+php artisan test --coverage
+
+# Run specific test file
+php artisan test tests/Feature/TransactionTest.php
+```
 
 ---
 
@@ -291,16 +438,26 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 📧 Support
 
-For support, email **support@example.com** or create an issue in the repository.
+For support, email **mdraza8397@gmail.com** or create an issue in the repository.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- [Laravel](https://laravel.com)
-- [TailwindCSS](https://tailwindcss.com)
-- [DataTables](https://datatables.net)
-- [Spatie Permission](https://spatie.be/docs/laravel-permission)
+- [Laravel](https://laravel.com) - PHP Framework
+- [TailwindCSS](https://tailwindcss.com) - CSS Framework
+- [DataTables](https://datatables.net) - Table plugin
+- [Chart.js](https://www.chartjs.org) - Charting library
+- [Spatie Permission](https://spatie.be/docs/laravel-permission) - Permission management
+- [Font Awesome](https://fontawesome.com) - Icons
+
+---
+
+## 📌 Project Info
+
+- **Version**: 1.0.0
+- **Last Updated**: April 2026
+- **Author**: Md Raza
 
 ---
 
