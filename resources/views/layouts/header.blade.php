@@ -98,7 +98,7 @@
                 class="p-2 mr-3 text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none">
                 <i class="bi bi-list text-2xl"></i>
             </button>
-            <a href="/" class="flex items-center space-x-2">
+            <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
                 <span class="text-xl font-bold text-blue-600 hidden md:block">Finance<span
                         class="text-gray-800 text-sm">PRO</span></span>
             </a>
