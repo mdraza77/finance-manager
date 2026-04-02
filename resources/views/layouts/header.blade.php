@@ -113,14 +113,17 @@
                 </button>
                 <div id="profileMenu"
                     class="hidden-dropdown absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl border border-gray-100 py-1 z-50">
-                    <a href="#"
+                    <a href="{{ route('profile.edit') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-50 font-medium">My
                         Profile</a>
-                    <form method="POST" action="{{ route('logout') }}"
-                        onclick="return confirm('Are you sure to Logout?')">
+
+                    {{-- Form mein id="logout-form" lagaya aur button ko type="button" kar diya --}}
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit"
-                            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">Sign Out</button>
+                        <button type="button" onclick="confirmLogout()"
+                            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                        </button>
                     </form>
                 </div>
             </div>
@@ -198,6 +201,22 @@
                     menu.classList.add('hidden-dropdown');
                 }
             }
+        }
+
+        function confirmLogout() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will be logged out of your account.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, Sign Out!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
         }
     </script>
 </body>
