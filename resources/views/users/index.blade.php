@@ -185,10 +185,9 @@
                                                                 class="inline-block no-export">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit"
+                                                                <button type="button"
                                                                     class="inline-flex items-center px-2.5 py-1.5 bg-yellow-50 text-yellow-600 rounded hover:bg-yellow-100 transition text-xs font-medium"
-                                                                    onclick="return confirm('Are you sure you want to activate this user?')"
-                                                                    title="Activate">
+                                                                    onclick="confirmActivate(event, this)" title="Activate">
                                                                     <i class="fa-solid fa-rotate-right"></i>
                                                                 </button>
                                                             </form>
@@ -199,9 +198,9 @@
                                                                 class="inline-block no-export">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit"
+                                                                <button type="button"
                                                                     class="inline-flex items-center px-2.5 py-1.5 bg-red-50 text-red-600 rounded hover:bg-red-100 transition text-xs font-medium"
-                                                                    onclick="return confirm('Are you sure you want to deactivate this user?')"
+                                                                    onclick="confirmDeactivate(event, this)"
                                                                     title="Deactivate">
                                                                     <i class="fa-solid fa-power-off"></i>
                                                                 </button>
@@ -223,4 +222,50 @@
         </section>
 
     </main>
+
+    <script>
+        function confirmDeactivate(event, button) {
+            event.preventDefault(); // Stop default button action
+
+            // Find the form that contains the clicked button
+            const form = button.closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This user will be deactivated and unable to login.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444', // Red for danger action
+                cancelButtonColor: '#6b7280', // Gray for cancel
+                confirmButtonText: 'Yes, deactivate user!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the specific form found above
+                    form.submit();
+                }
+            });
+        }
+
+        function confirmActivate(event, button) {
+            event.preventDefault(); // Stop default button action
+
+            // Find the form that contains the clicked button
+            const form = button.closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This user will be activated and granted access again.",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#eab308', // Tailwind Yellow-500 to match the button
+                cancelButtonColor: '#6b7280', // Tailwind Gray-500
+                confirmButtonText: 'Yes, activate user!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the specific form
+                    form.submit();
+                }
+            });
+        }
+    </script>
 @endsection

@@ -181,11 +181,11 @@
                         @endcan
 
                         @can('Transaction-Delete')
-                            <form method="POST" action="{{ route('transactions.destroy', $transaction->id) }}"
-                                onsubmit="return confirm('Are you sure you want to delete this transaction?')">
+                            <form id="delete-form" method="POST"
+                                action="{{ route('transactions.destroy', $transaction->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
+                                <button type="button" onclick="confirmDelete()"
                                     class="w-full inline-flex justify-center items-center px-6 py-3 bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-lg transition border border-red-200">
                                     <i class="fas fa-trash mr-2"></i> Delete this Transaction
                                 </button>
@@ -198,4 +198,22 @@
         </div>
 
     </main>
+
+    <script>
+        function confirmDelete() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this deleted transaction!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form').submit();
+                }
+            });
+        }
+    </script>
 @endsection

@@ -122,12 +122,12 @@
                                                 @can('AccessManagement-Delete')
                                                     @if ($role->id != 1)
                                                         <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
-                                                            class="inline-block">
+                                                            class="inline-block no-export">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
+                                                            <button type="button"
                                                                 class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded hover:bg-red-100 transition text-sm font-medium"
-                                                                onclick="return confirm('Are you sure you want to delete this role?')">
+                                                                onclick="confirmRoleDelete(event, this)">
                                                                 <i class="fa-solid fa-trash mr-1.5"></i> Delete
                                                             </button>
                                                         </form>
@@ -147,5 +147,27 @@
         </section>
 
     </main>
+
+    <script>
+        function confirmRoleDelete(event, button) {
+            event.preventDefault();
+
+            const form = button.closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Deleting this role might affect users assigned to it!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444', // Tailwind Red-500
+                cancelButtonColor: '#6b7280', // Tailwind Gray-500
+                confirmButtonText: 'Yes, delete role!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    </script>
 
 @endsection

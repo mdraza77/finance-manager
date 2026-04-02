@@ -172,8 +172,7 @@
                                                         @method('DELETE')
                                                         <button type="submit"
                                                             class="inline-flex items-center px-2.5 py-1.5 bg-red-50 text-red-600 rounded hover:bg-red-100 transition text-xs font-medium"
-                                                            onclick="return confirm('Are you sure you want to delete this transaction?')"
-                                                            title="Delete">
+                                                            onclick="confirmDelete(event, this)" title="Delete">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -193,4 +192,26 @@
         </section>
 
     </main>
+
+    <script>
+        function confirmDelete(event, button) {
+            event.preventDefault();
+
+            const form = button.closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this deleted transaction!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    </script>
 @endsection
