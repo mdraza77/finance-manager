@@ -4,15 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\NotificationModel;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
-use DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Arr;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -20,6 +15,7 @@ use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class UserController extends Controller implements HasMiddleware
 {
+    // Permission middleware for user management
     public static function middleware()
     {
         return [
@@ -27,7 +23,7 @@ class UserController extends Controller implements HasMiddleware
             new Middleware(PermissionMiddleware::class . ':UserManagement-Create', only: ['create', 'store']),
             new Middleware(PermissionMiddleware::class . ':UserManagement-Edit', only: ['edit', 'update']),
             new Middleware(PermissionMiddleware::class . ':UserManagement-Delete', only: ['destroy']),
-            new Middleware(PermissionMiddleware::class . ':UserManagement-View', only: ['show']), // Usually 'view' uses the index permission
+            new Middleware(PermissionMiddleware::class . ':UserManagement-View', only: ['show']),
         ];
     }
     /**

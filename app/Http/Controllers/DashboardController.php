@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Transaction;
 use GuzzleHttp\Middleware;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
+    // Permission middleware for dashboard access
     public static function middleware()
     {
         return [
@@ -49,19 +49,34 @@ class DashboardController extends Controller
         $recentActivity = $transactions->take(5);
 
         // Monthly trends (last 6 months)
-        $monthlyTrends = Transaction::where('transaction_date', '>=', now()->subMonths(6))
-            ->get()
-            ->groupBy(function ($item) {
-                return \Carbon\Carbon::parse($item->transaction_date)->format('Y-m');
-            })
-            ->map(function ($group) {
-                return [
-                    'month' => $group->first()->transaction_date,
-                    'income' => $group->where('type', 'income')->sum('amount'),
-                    'expense' => $group->where('type', 'expense')->sum('amount'),
-                ];
-            })
-            ->values();
+        $monthlyTrends = collect();
+
+        // Loop through the previous 5 months and the current month (Total 6 months)
+        for ($i = 5; $i >= 0; $i--) {
+            // Go back $i months from the current date
+            $date = Carbon::now()->subMonths($i);
+
+            // Get the first and last day of that specific month
+            $monthStart = $date->copy()->startOfMonth()->toDateString();
+            $monthEnd = $date->copy()->endOfMonth()->toDateString();
+
+            // Calculate the total income for that month
+            $income = Transaction::where('type', 'income')
+                ->whereBetween('transaction_date', [$monthStart, $monthEnd])
+                ->sum('amount');
+
+            // Calculate the total expense for that month
+            $expense = Transaction::where('type', 'expense')
+                ->whereBetween('transaction_date', [$monthStart, $monthEnd])
+                ->sum('amount');
+
+            // Push the calculated data into the collection
+            $monthlyTrends->push([
+                'month' => $date->format('Y-m-01'), // Set the date to the 1st of that month
+                'income' => $income,
+                'expense' => $expense
+            ]);
+        }
 
         $Totalusers = User::count();
 

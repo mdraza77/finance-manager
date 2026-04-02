@@ -241,13 +241,15 @@
             const ctx = document.getElementById('monthlyTrendsChart').getContext('2d');
 
             const monthlyData = @json($monthlyTrends);
+
             const labels = monthlyData.map(item => {
-                const date = new Date(item.month + '-01');
+                const date = new Date(item.month);
                 return date.toLocaleString('default', {
                     month: 'short',
-                    year: '2-digit'
+                    year: 'numeric'
                 });
             });
+
             const incomeData = monthlyData.map(item => parseFloat(item.income));
             const expenseData = monthlyData.map(item => parseFloat(item.expense));
 
@@ -284,7 +286,8 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                    return context.dataset.label + ': $' + context.parsed.y
+                                        .toLocaleString();
                                 }
                             }
                         }

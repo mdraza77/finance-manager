@@ -104,10 +104,12 @@
                                 class="inline-flex items-center px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition">
                                 Cancel
                             </a>
-                            <button type="submit"
-                                class="inline-flex items-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition">
-                                <i class="bi bi-check-lg mr-2"></i> Update Role
-                            </button>
+                            @can('AccessManagement-Edit')
+                                <button type="submit"
+                                    class="inline-flex items-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition">
+                                    <i class="bi bi-check-lg mr-2"></i> Update Role
+                                </button>
+                            @endcan
                         </div>
 
                     </form>

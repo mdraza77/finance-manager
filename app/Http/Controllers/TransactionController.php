@@ -10,7 +10,7 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class TransactionController extends Controller implements HasMiddleware
 {
-    // Permissions Setup
+    // Permissions middleware for transaction management
     public static function middleware()
     {
         return [
