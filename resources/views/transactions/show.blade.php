@@ -5,7 +5,7 @@
     <main id="main" class="p-6 bg-gray-50 min-h-screen transition-all duration-300">
 
         {{-- Page Header --}}
-        <div class="mb-6 mt-20 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">Transaction Details</h1>
@@ -44,14 +44,18 @@
 
                             {{-- Transaction Type --}}
                             <div>
-                                <label class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Type</label>
-                                <div class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium">
+                                <label
+                                    class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Type</label>
+                                <div
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium">
                                     @if ($transaction->type === 'income')
-                                        <span class="inline-flex items-center px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full border border-green-200">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full border border-green-200">
                                             <i class="fas fa-arrow-up mr-1.5"></i> Income
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-3 py-1 bg-red-100 text-red-700 text-sm font-semibold rounded-full border border-red-200">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 bg-red-100 text-red-700 text-sm font-semibold rounded-full border border-red-200">
                                             <i class="fas fa-arrow-down mr-1.5"></i> Expense
                                         </span>
                                     @endif
@@ -60,9 +64,12 @@
 
                             {{-- Category --}}
                             <div>
-                                <label class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Category</label>
-                                <div class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium">
-                                    <span class="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-700 text-sm font-semibold rounded-md border border-blue-200">
+                                <label
+                                    class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Category</label>
+                                <div
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-700 text-sm font-semibold rounded-md border border-blue-200">
                                         {{ $transaction->category }}
                                     </span>
                                 </div>
@@ -70,18 +77,23 @@
 
                             {{-- Amount --}}
                             <div>
-                                <label class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Amount</label>
-                                <div class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-bold text-lg flex items-center">
-                                    <i class="fas fa-dollar-sign text-gray-400 mr-1"></i> 
+                                <label
+                                    class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Amount</label>
+                                <div
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-bold text-lg flex items-center">
+                                    <i class="fas fa-dollar-sign text-gray-400 mr-1"></i>
                                     ${{ number_format($transaction->amount, 2) }}
                                 </div>
                             </div>
 
                             {{-- Transaction Date --}}
                             <div>
-                                <label class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Transaction Date</label>
-                                <div class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium flex items-center">
-                                    <i class="fas fa-calendar text-gray-400 mr-2"></i> 
+                                <label
+                                    class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Transaction
+                                    Date</label>
+                                <div
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium flex items-center">
+                                    <i class="fas fa-calendar text-gray-400 mr-2"></i>
                                     {{ \Carbon\Carbon::parse($transaction->transaction_date)->format('F d, Y') }}
                                 </div>
                             </div>
@@ -89,8 +101,10 @@
                             {{-- Description (Full Width) --}}
                             @if ($transaction->description)
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Description</label>
-                                    <div class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium">
+                                    <label
+                                        class="block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Description</label>
+                                    <div
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 font-medium">
                                         {{ $transaction->description }}
                                     </div>
                                 </div>
@@ -113,9 +127,8 @@
                     </div>
                     <div class="p-4">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold shadow-sm">
-                                {{ strtoupper(substr($transaction->user->name, 0, 1)) }}
-                            </div>
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode($transaction->user->name) }}&background=dbeafe&color=1d4ed8&bold=true"
+                                class="w-9 h-9 rounded-full border border-blue-200 shadow-sm" alt="Avatar">
                             <div class="ml-3">
                                 <p class="font-semibold text-gray-800">{{ $transaction->user->name }}</p>
                                 <p class="text-xs text-gray-500">{{ $transaction->user->email }}</p>
@@ -134,16 +147,19 @@
                     <div class="p-4 space-y-3">
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-500">Created:</span>
-                            <span class="font-semibold text-gray-700">{{ $transaction->created_at->format('M d, Y h:i A') }}</span>
+                            <span
+                                class="font-semibold text-gray-700">{{ $transaction->created_at->format('M d, Y h:i A') }}</span>
                         </div>
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-500">Updated:</span>
-                            <span class="font-semibold text-gray-700">{{ $transaction->updated_at->format('M d, Y h:i A') }}</span>
+                            <span
+                                class="font-semibold text-gray-700">{{ $transaction->updated_at->format('M d, Y h:i A') }}</span>
                         </div>
                         @if ($transaction->deleted_at)
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-500">Deleted:</span>
-                                <span class="font-semibold text-red-600">{{ $transaction->deleted_at->format('M d, Y h:i A') }}</span>
+                                <span
+                                    class="font-semibold text-red-600">{{ $transaction->deleted_at->format('M d, Y h:i A') }}</span>
                             </div>
                         @endif
                     </div>

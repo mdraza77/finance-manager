@@ -48,7 +48,7 @@
         @endif
 
         {{-- Page Header --}}
-        <div class="mb-6 mt-20 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">Financial Records</h1>
@@ -136,11 +136,9 @@
 
                                         {{-- User --}}
                                         <td class="px-4 py-4">
-                                            <div class="flex items-center">
-                                                <div
-                                                    class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs mr-2 shadow-sm">
-                                                    {{ strtoupper(substr($transaction->user->name, 0, 1)) }}
-                                                </div>
+                                            <div class="flex items-center justify-content-between gap-2">
+                                                <img src="https://ui-avatars.com/api/?name={{ urlencode($transaction->user->name) }}&background=dbeafe&color=1d4ed8&bold=true"
+                                                    class="w-9 h-9 rounded-full border border-gray-200" alt="">
                                                 <span
                                                     class="font-medium text-gray-700">{{ $transaction->user->name }}</span>
                                             </div>

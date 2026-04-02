@@ -49,7 +49,7 @@
         @endif
 
         {{-- Page Header --}}
-        <div class="mb-6 mt-20 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">User Management</h1>
@@ -108,11 +108,9 @@
 
                                         {{-- Profile Box --}}
                                         <td class="px-4 py-4">
-                                            <div class="flex items-center">
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold mr-3 shadow-sm">
-                                                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                                                </div>
+                                            <div class="flex items-center justify-content-between gap-2">
+                                                <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=dbeafe&color=1d4ed8&bold=true""
+                                                    class="w-9 h-9 rounded-full border border-gray-200" alt="">
                                                 <div>
                                                     <h6 class="font-bold text-gray-800 mb-0">{{ $user->name }}
                                                 </div>

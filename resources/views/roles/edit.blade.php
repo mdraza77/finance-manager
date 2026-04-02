@@ -5,7 +5,7 @@
     <main id="main" class="p-6 bg-gray-50 min-h-screen transition-all duration-300">
 
         {{-- Page Header --}}
-        <div class="mb-6 mt-20 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
+        <div class="mb-6 bg-white rounded-lg shadow-sm border-l-4 border-blue-600 p-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">Update Role</h1>
