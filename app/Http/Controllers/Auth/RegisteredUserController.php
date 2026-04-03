@@ -32,15 +32,26 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'mobile' => [
+                'required',
+                'string',
+                'regex:/^\+?[1-9]\d{1,14}$/', // Starts with +, followed by 7 to 15 digits
+                'max:15',
+                'min:10', // Minimum length for mobile numbers
+                'unique:users,mobile', // Ensure mobile number is unique
+            ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'mobile' => $request->mobile,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->assignRole('Viewer'); // Default role for new users
 
         event(new Registered($user));
 

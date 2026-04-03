@@ -57,7 +57,15 @@ class UserController extends Controller implements HasMiddleware
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'mobile' => 'required|digits:10|unique:users,mobile',
+            // 'mobile' => 'required|digits:10|unique:users,mobile',
+            'mobile' => [
+                'required',
+                'string',
+                'regex:/^\+?[1-9]\d{1,14}$/', // Starts with +, followed by 7 to 15 digits
+                'max:15',
+                'min:10', // Minimum length for mobile numbers
+                'unique:users,mobile', // Ensure mobile number is unique
+            ],
             'email' => 'required|email|unique:users,email',
             'roles' => 'required|array',
             'password' => 'required|string|min:8|same:confirm-password',

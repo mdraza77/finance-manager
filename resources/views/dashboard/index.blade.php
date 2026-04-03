@@ -86,19 +86,22 @@
                 </div>
 
                 {{-- System Users --}}
-                <a href="{{ route('users.index') }}">
-                    <div class="bg-white rounded-xl shadow-sm border-l-4 border-orange-500 p-6 hover:shadow-md transition">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-500 uppercase">System Users</p>
-                                <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $Totalusers ?? 0 }}</h3>
-                            </div>
-                            <div class="h-12 w-12 bg-orange-50 rounded-full flex items-center justify-center">
-                                <i class="fas fa-users text-2xl text-orange-600"></i>
+                @canany(['UserManagement-Index', 'UserManagement-Create', 'UserManagement-Edit', 'UserManagement-View',
+                    'UserManagement-Delete'])
+                    <a href="{{ route('users.index') }}">
+                        <div class="bg-white rounded-xl shadow-sm border-l-4 border-orange-500 p-6 hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-500 uppercase">System Users</p>
+                                    <h3 class="text-2xl font-bold text-gray-800 mt-1">{{ $Totalusers ?? 0 }}</h3>
+                                </div>
+                                <div class="h-12 w-12 bg-orange-50 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-users text-2xl text-orange-600"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                @endcanany
             </div>
 
             {{-- Charts and Tables Row --}}

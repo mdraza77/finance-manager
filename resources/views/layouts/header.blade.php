@@ -137,45 +137,57 @@
         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-200 translate-x-0">
         <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
             <ul class="space-y-2 font-medium">
-                <li>
-                    <a href="{{ route('dashboard') }}"
-                        class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : '' }}">
-                        <i class="bi bi-grid-fill mr-3"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-
-                <div class="pt-4 mt-4 space-y-2 border-t border-gray-100">
-                    <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Management</p>
-
+                @can('Dashboard-View')
                     <li>
-                        <a href="{{ route('transactions.index') }}"
-                            class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('transactions.*') ? 'bg-blue-50 text-blue-600' : '' }}">
-                            <i class="bi bi-cash-stack mr-3"></i>
-                            <span>Financial Records</span>
+                        <a href="{{ route('dashboard') }}"
+                            class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : '' }}">
+                            <i class="bi bi-grid-fill mr-3"></i>
+                            <span>Dashboard</span>
                         </a>
                     </li>
+                @endcan
+                {{-- Management Section Wrapper --}}
+                @canany(['Transaction-Index', 'UserManagement-Index', 'AccessManagement-Index'])
+                    <div class="pt-4 mt-4 space-y-2 border-t border-gray-100">
+                        {{-- Section Title --}}
+                        <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                            Management
+                        </p>
 
-                    @can('UserManagement-Index')
-                        <li>
-                            <a href="{{ route('users.index') }}"
-                                class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('users.*') ? 'bg-blue-50 text-blue-600' : '' }}">
-                                <i class="bi bi-people-fill mr-3"></i>
-                                <span>User Management</span>
-                            </a>
-                        </li>
-                    @endcan
+                        {{-- Financial Records --}}
+                        @can('Transaction-Index')
+                            <li>
+                                <a href="{{ route('transactions.index') }}"
+                                    class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('transactions.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                                    <i class="bi bi-cash-stack mr-3"></i>
+                                    <span>Financial Records</span>
+                                </a>
+                            </li>
+                        @endcan
 
-                    @can('AccessManagement-Index')
-                        <li>
-                            <a href="{{ route('roles.index') }}"
-                                class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('roles.*') ? 'bg-blue-50 text-blue-600' : '' }}">
-                                <i class="bi bi-lock-fill mr-3"></i>
-                                <span>Roles & Permissions</span>
-                            </a>
-                        </li>
-                    @endcan
-                </div>
+                        {{-- User Management --}}
+                        @can('UserManagement-Index')
+                            <li>
+                                <a href="{{ route('users.index') }}"
+                                    class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('users.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                                    <i class="bi bi-people-fill mr-3"></i>
+                                    <span>User Management</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        {{-- Roles & Permissions --}}
+                        @can('AccessManagement-Index')
+                            <li>
+                                <a href="{{ route('roles.index') }}"
+                                    class="flex items-center p-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 group {{ request()->routeIs('roles.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                                    <i class="bi bi-lock-fill mr-3"></i>
+                                    <span>Roles & Permissions</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </div>
+                @endcanany
             </ul>
         </div>
     </aside>
