@@ -195,6 +195,8 @@ After running the seeder, login with:
 | Role  | Email             | Password        |
 |-------|-------------------|-----------------|
 | Admin | admin@gmail.com   | Success2026$    |
+| Viewer | viewer@gmail.com   | Success2026$    |
+| Analyst | analyst@gmail.com   | Success2026$    |
 
 > ⚠️ **Change default credentials immediately in production!**
 

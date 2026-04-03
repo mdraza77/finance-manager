@@ -36,8 +36,21 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Md Raza',
                 'email' => 'admin@gmail.com',
+                'mobile' => '+919876543210',
                 'role' => 'Admin'
-            ]
+            ],
+            [
+                'name' => 'Analyst User',
+                'email' => 'analyst@gmail.com',
+                'mobile' => '+919876543211',
+                'role' => 'Analyst'
+            ],
+            [
+                'name' => 'Viewer User',
+                'email' => 'viewer@gmail.com',
+                'mobile' => '+919876543212',
+                'role' => 'Viewer'
+            ],
         ];
 
         // 4. Create Users and Assign Roles
@@ -46,7 +59,9 @@ class UserSeeder extends Seeder
                 ['email' => $userData['email']], // Unique key to find the user
                 [
                     'name' => $userData['name'],
-                    'password' => Hash::make('Success2026$')
+                    'mobile' => $userData['mobile'],
+                    'password' => Hash::make('Success2026$'),
+                    'email_verified_at' => now(),
                 ]
             );
             $user->assignRole($userData['role']);
