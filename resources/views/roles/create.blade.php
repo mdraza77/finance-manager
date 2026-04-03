@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Role Create - Finance Admin')
+@section('title', 'FinancePRO | Role Create')
 
 @section('content')
     <main id="main" class="p-6 bg-gray-50 min-h-screen transition-all duration-300">
