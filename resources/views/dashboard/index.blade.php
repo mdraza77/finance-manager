@@ -46,7 +46,8 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-semibold text-gray-500 uppercase">Total Income</p>
-                            <h3 class="text-2xl font-bold text-green-600 mt-1">${{ number_format($totalIncome, 2) }}</h3>
+                            <h3 class="text-2xl font-bold text-red-600 mt-1">
+                                ${{ number_format((float) ($totalExpenses ?? 0), 2) }}</h3>
                         </div>
                         <div class="h-12 w-12 bg-green-50 rounded-full flex items-center justify-center">
                             <i class="fas fa-arrow-up text-2xl text-green-600"></i>
@@ -59,7 +60,8 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-semibold text-gray-500 uppercase">Total Expenses</p>
-                            <h3 class="text-2xl font-bold text-red-600 mt-1">${{ number_format($totalExpenses, 2) }}</h3>
+                            <h3 class="text-2xl font-bold text-red-600 mt-1">
+                                ${{ number_format((float) ($totalExpenses ?? 0), 2) }}</h3>
                         </div>
                         <div class="h-12 w-12 bg-red-50 rounded-full flex items-center justify-center">
                             <i class="fas fa-arrow-down text-2xl text-red-600"></i>
@@ -74,7 +76,7 @@
                             <p class="text-sm font-semibold text-gray-500 uppercase">Net Balance</p>
                             <h3
                                 class="text-2xl font-bold @if ($netBalance >= 0) text-blue-600 @else text-red-600 @endif mt-1">
-                                ${{ number_format($netBalance, 2) }}
+                                ${{ number_format((float) ($netBalance ?? 0), 2) }}
                             </h3>
                         </div>
                         <div class="h-12 w-12 bg-blue-50 rounded-full flex items-center justify-center">
